@@ -1,17 +1,29 @@
 import express from 'express'
 import { connectDB } from './config/mongodb.js'
+import { BoardModel } from './models/board.model'
 require('dotenv').config()
 
-const app = express()
+connectDB() //khi kết nối với db thành công thì mới bootserver
+  .then(() => console.log('Connected successfully to database server!'))
+  .then(() => bootServer())
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
 
-connectDB().catch(console.log)
+const bootServer = () => {
+  const app = express()
 
-// const hostname = 'localhost'
-// const port = 8017
-app.get('/', (req, res) => {
-  res.end('<h1>Hi</h1><hr/>')
-})
+  app.get('/test', async (req, res) => {
+    // let fakeData = {
+    //   title: 'hoangdev'
+    // }
+    // await BoardModel.createNew(fakeData)
 
-app.listen(process.env.PORT, process.env.HOST, () => {
-  console.log(`hello, I'm running at ${process.env.HOST}:${process.env.PORT}/`)
-})
+    res.end('<h1>Hi</h1><hr/>')
+  })
+
+  app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+    console.log(`hello, I'm running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
+  })
+}

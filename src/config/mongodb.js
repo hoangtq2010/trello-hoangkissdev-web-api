@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb'
 // import { env } from './environtment.js'
 require('dotenv').config()
 
+let dbInstance = null
 
 const uri = process.env.MONGDODB_URI
 console.log(uri)
@@ -11,23 +12,16 @@ export const connectDB = async () => {
     useUnifiedTopology: true,
     useNewUrlParser: true
   })
-  try {
-    // Connect the client to the server
-    await client.connect()
 
-    // List database
-    await listDatabases(client)
+  // Connect the client to the server
+  await client.connect()
 
-    console.log('Connected successfully to server!')
-  } finally {
-    await client.close()
-    console.log('close')
-  }
+  // Assign clientDB to our dbInstance
+  dbInstance = client.db(process.env.DATABASE_NAME)
 }
 
-const listDatabases = async (client) => {
-  const databasesList = await client.db().admin().listDatabases()
-  console.log(databasesList)
-  console.log('Your databases:')
-  databasesList.databases.forEach(db => { console.log(` - ${db.name}`) })
+// Get database Instance
+export const getDB = () => {
+  if (!dbInstance) throw new Error('Must connect to Database first!')
+  return dbInstance
 }
