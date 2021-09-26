@@ -5,7 +5,6 @@ require('dotenv').config()
 let dbInstance = null
 
 const uri = process.env.MONGDODB_URI
-console.log(uri)
 
 export const connectDB = async () => {
   const client = new MongoClient (uri, {

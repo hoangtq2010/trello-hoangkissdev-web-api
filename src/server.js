@@ -1,6 +1,7 @@
 import express from 'express'
 import { connectDB } from './config/mongodb.js'
 import { BoardModel } from './models/board.model'
+import { apiV1 } from './routes/v1/index'
 require('dotenv').config()
 
 connectDB() //khi kết nối với db thành công thì mới bootserver
@@ -14,16 +15,14 @@ connectDB() //khi kết nối với db thành công thì mới bootserver
 const bootServer = () => {
   const app = express()
 
-  app.get('/test', async (req, res) => {
-    // let fakeData = {
-    //   title: 'hoangdev'
-    // }
-    // await BoardModel.createNew(fakeData)
+  // Enable req.body data (body.parser)
+  app.use(express.json())
 
-    res.end('<h1>Hi</h1><hr/>')
-  })
+  // Use APIs v1
+  app.use('/v1', apiV1)
 
   app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
     console.log(`hello, I'm running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
   })
 }
+
