@@ -1,7 +1,7 @@
-import { BoardModel } from '../models/board.model'
+import { boardModel } from '../models/board.model'
 const createNew = async (data) => {
   try {
-    const result = await BoardModel.createNew(data)
+    const result = await boardModel.createNew(data)
     return result
   } catch (error) {
     throw new Error(error)
