@@ -4,7 +4,7 @@ import { HttpStatusCode } from '../utilities/constants'
 const createNew = async (req, res, next) => {
   const condition = Joi.object({
     boardId: Joi.string().required(),
-    columndId: Joi.string().required(),
+    columnId: Joi.string().required(),
     title: Joi.string().required().min(3).max(30).trim()
   })
   try {
