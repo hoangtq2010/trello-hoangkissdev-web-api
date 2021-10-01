@@ -1,10 +1,15 @@
-import { date } from 'joi'
 import { columnModel } from '../models/column.model'
+import { boardModel } from '../models/board.model'
 
 const createNew = async (data) => {
   try {
-    const result = await columnModel.createNew(data)
-    return result
+    // transaction mongodb
+    const newColumn = await columnModel.createNew(data)
+
+    // update columnOrder Array in board collection
+    await boardModel.pushColumnOrder(newColumn.boardId.toString(), newColumn._id.toString())
+
+    return newColumn
   } catch (error) {
     throw new Error(error)
   }
