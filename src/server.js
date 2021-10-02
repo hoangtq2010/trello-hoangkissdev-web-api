@@ -1,7 +1,9 @@
 import express from 'express'
 import { connectDB } from './config/mongodb.js'
-import { BoardModel } from './models/board.model'
 import { apiV1 } from './routes/v1/index'
+import cors from 'cors'
+import { corsOptions } from './config/cors'
+
 require('dotenv').config()
 
 connectDB() //khi kết nối với db thành công thì mới bootserver
@@ -14,6 +16,8 @@ connectDB() //khi kết nối với db thành công thì mới bootserver
 
 const bootServer = () => {
   const app = express()
+
+  app.use(cors(corsOptions))
 
   // Enable req.body data (body.parser)
   app.use(express.json())
