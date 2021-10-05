@@ -35,7 +35,26 @@ const createNew = async (data) => {
   }
 }
 
+/**
+ *
+ * @param {Array of string card id} ids
+ */
+const deleteMany = async (ids) => {
+  try {
+    const transformIds = ids.map(i => ObjectId(i))
+    const result = await getDB().collection(cardCollectionName).updateMany(
+      { _id: { $in: transformIds } },
+      { $set: { _destroy: true } }
+    )
+
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const cardModel = {
   createNew,
-  cardCollectionName
+  cardCollectionName,
+  deleteMany
 }
