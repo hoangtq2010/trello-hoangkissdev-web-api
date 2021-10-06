@@ -5,12 +5,13 @@ import { cardModel } from '../models/card.model'
 const createNew = async (data) => {
   try {
     // transaction mongodb
-    const newColumn = await columnModel.createNew(data)
-    newColumn.cards = []
+    const createdColumn = await columnModel.createNew(data)
+    const getNewColumn = await columnModel.findOneById(createdColumn.insertedId.toString())
+    getNewColumn.cards = []
     // update columnOrder Array in board collection
-    await boardModel.pushColumnOrder(newColumn.boardId.toString(), newColumn._id.toString())
+    await boardModel.pushColumnOrder(getNewColumn.boardId.toString(), getNewColumn._id.toString())
 
-    return newColumn
+    return getNewColumn
   } catch (error) {
     throw new Error(error)
   }

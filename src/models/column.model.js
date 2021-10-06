@@ -17,6 +17,15 @@ const validateSchema = async (data) => {
   return await columnCollectionSchema.validateAsync(data, { abortEarly: false })
 }
 
+const findOneById = async (id) => {
+  try {
+    const result = await getDB().collection(columnCollectionName).findOne({ _id: ObjectId(id) })
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const createNew = async (data) => {
   try {
     // Chuyển boardId từ string sang ObjectId
@@ -73,5 +82,6 @@ export const columnModel = {
   columnCollectionName,
   createNew,
   pushCardOrder,
-  update
+  update,
+  findOneById
 }
