@@ -19,6 +19,15 @@ const validateSchema = async (data) => {
   return await boardCollectionSchema.validateAsync(data, { abortEarly: false })
 }
 
+const findOneById = async (id) => {
+  try {
+    const result = await getDB().collection(boardCollectionName).findOne({ _id: ObjectId(id) })
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 const createNew = async (data) => {
   try {
     const value = await validateSchema(data)
@@ -102,5 +111,6 @@ export const boardModel = {
   createNew,
   update,
   pushColumnOrder,
-  getFullBoard
+  getFullBoard,
+  findOneById
 }
