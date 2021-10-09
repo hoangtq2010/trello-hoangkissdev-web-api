@@ -82,9 +82,9 @@ const deleteMany = async (ids) => {
 }
 
 export const cardModel = {
+  cardCollectionName,
   createNew,
   update,
-  cardCollectionName,
   deleteMany,
   findOneById
 }
