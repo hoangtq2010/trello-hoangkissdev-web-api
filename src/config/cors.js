@@ -1,4 +1,4 @@
-const WHITELIST_DOMAIN = ['https://clone-trello-hoangdevweb.web.app']
+const WHITELIST_DOMAIN = ['https://clone-trello-hoang.herokuapp.com']
 export const corsOptions = {
   origin: function (origin, callback) {
     if (WHITELIST_DOMAIN.indexOf(origin) !== -1) {
